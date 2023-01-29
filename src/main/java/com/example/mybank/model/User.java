@@ -20,8 +20,11 @@ public class User {
     @Column(nullable=false, length=64)
     private String password;
      
-    @Column(name="email", nullable=true, length=128)
+    @Column(name="email", nullable=true, unique=true, length=128)
     private String email;
+
+    @Column(name="admim", nullable=false)
+    private Boolean admin;
 
     public Long getId() {
         return id;
@@ -51,7 +54,10 @@ public class User {
         this.email = email;
     }
 
-    public String toString() {
-        return "User Object";
+    public Boolean getAdmin() {
+        return admin;
+    }
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 }

@@ -11,6 +11,10 @@
         <input type="text" th:field="*{username}" maxlength="64" required />
         <input type="password" th:field="*{password}" maxlength="64" required />
         <input type="email" th:field="*{email}" maxlength="128" />
+        <select th:field="*{admin}" required>
+            <option value="0">User</option>
+            <option value="1">Admin</option>
+        </select>
         <button type="submit">Register</button>
     </form>
 

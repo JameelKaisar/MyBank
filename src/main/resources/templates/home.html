@@ -9,7 +9,12 @@
     <form method="post" th:action="@{/logout}">
         <p>
             Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
+            <br>
+            Logged in as <td th:text="${admin} ? 'Admin' : 'User'" />
         </p>
+        <div th:if="${admin}">
+            <h3>User List</h3>
+        </div>
         <input type="submit" value="Logout" />
     </form>
 </body>
