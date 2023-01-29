@@ -16,18 +16,18 @@
                             <div class="alert alert-danger">Unknown Error</div>
                         </div>
                         <form method="post" th:action="@{/register}" th:object="${user}" class="form">
-                            <div class="form-label-group my-3">
+                            <div class="form-group my-3">
                                 <input type="text" th:field="*{username}" class="form-control" placeholder="Username" required
                                     autofocus>
                             </div>
-                            <div class="form-label-group my-3">
+                            <div class="form-group my-3">
                                 <input type="password" th:field="*{password}" class="form-control" placeholder="Password"
                                     required>
                             </div>
-                            <div class="form-label-group my-3">
+                            <div class="form-group my-3">
                                 <input type="email" th:field="*{email}" class="form-control" placeholder="Email">
                             </div>
-                            <div class="form-label-group my-3">
+                            <div class="form-group my-3">
                                 <select th:field="*{admin}" class="form-control" required>
                                     <option value="0">User</option>
                                     <option value="1">Admin</option>
