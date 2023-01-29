@@ -2,6 +2,8 @@ package com.example.mybank.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,8 +21,23 @@ public class HomeController {
 	public String home(Model model, Authentication authentication) {
 		String username = authentication.getName();
 		User user = userRepo.findByUsername(username);
+		model.addAttribute("username", user.getUsername());
+		model.addAttribute("email", user.getEmail());
 		model.addAttribute("admin", user.getAdmin());
 		return "home";
+	}
+
+	@PostMapping(path="/home")
+	public String home(Authentication authentication, @RequestParam("email") String new_email) {
+		try {
+			String username = authentication.getName();
+			User user = userRepo.findByUsername(username);
+			user.setEmail(new_email);
+			userRepo.save(user);
+		} catch (Exception e) {
+			return "redirect:/home?error";
+		}
+		return "redirect:/home";
 	}
 
 }

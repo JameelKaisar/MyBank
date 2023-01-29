@@ -6,15 +6,32 @@
 </head>
 <body>
     <h1>Home Page</h1>
+
+    <div>
+        Welcome <b>[[${username}]]</b>
+        <br>
+        Logged in as <td th:text="${admin} ? 'Admin' : 'User'" />
+    </div>
+
+    <div>
+        <h3>User Details</h3>
+        <p>Username: [[${username}]]</p>
+        <p>Email: [[${email}]]</p>
+    </div>
+
+    <div>
+        <h3>Update Details</h3>
+        <form method="post" th:action="@{/home}">
+            <input type="email" name="email" th:value="${email}" maxlength="128" required />
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+    <div th:if="${admin}">
+        <h3>User List</h3>
+    </div>
+
     <form method="post" th:action="@{/logout}">
-        <p>
-            Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
-            <br>
-            Logged in as <td th:text="${admin} ? 'Admin' : 'User'" />
-        </p>
-        <div th:if="${admin}">
-            <h3>User List</h3>
-        </div>
         <input type="submit" value="Logout" />
     </form>
 </body>
