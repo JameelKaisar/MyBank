@@ -6,6 +6,13 @@
 </head>
 <body>
     <h1>Login Page</h1>
+
+    <form method="post" th:action="@{/login}">
+        <input type="text" name="username" maxlength="64" required />
+        <input type="password" name="password" maxlength="64" required />
+        <button type="submit">Login</button>
+    </form>
+
     <h3><a th:href="@{/register}">Register</a></h3>
 </body>
 </html>
