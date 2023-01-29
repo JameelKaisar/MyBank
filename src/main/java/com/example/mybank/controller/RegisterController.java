@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.example.mybank.model.*;
 import com.example.mybank.repository.*;
@@ -22,8 +26,16 @@ public class RegisterController {
 
 	@PostMapping(path="/register")
 	public String registerHandle(User user) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String plainPassword = user.getPassword();
+    	String encodedPassword = passwordEncoder.encode(plainPassword);
+    	user.setPassword(encodedPassword);
 	    userRepo.save(user);
-    	return "home";
+
+		Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), plainPassword);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+    	return "redirect:/home";
 	}
 
 }
