@@ -7,6 +7,10 @@
 <body>
     <h1>Login Page</h1>
 
+    <div th:if="${param.error}">
+        <div class="alert alert-danger">Invalid Username or Password</div>
+    </div>
+
     <form method="post" th:action="@{/login}">
         <input type="text" name="username" maxlength="64" required />
         <input type="password" name="password" maxlength="64" required />

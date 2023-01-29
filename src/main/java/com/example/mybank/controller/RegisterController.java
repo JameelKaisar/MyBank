@@ -26,16 +26,20 @@ public class RegisterController {
 
 	@PostMapping(path="/register")
 	public String registerHandle(User user) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String plainPassword = user.getPassword();
-    	String encodedPassword = passwordEncoder.encode(plainPassword);
-    	user.setPassword(encodedPassword);
-	    userRepo.save(user);
+		try {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String plainPassword = user.getPassword();
+			String encodedPassword = passwordEncoder.encode(plainPassword);
+			user.setPassword(encodedPassword);
+			userRepo.save(user);
 
-		Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), plainPassword);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), plainPassword);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (Exception e) {
+			return "redirect:/register?error";
+		}
 
-    	return "redirect:/home";
+		return "redirect:/home";
 	}
 
 }
