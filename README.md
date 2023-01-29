@@ -19,9 +19,15 @@ CREATE DATABASE mybank;
 SHOW DATABASES;
 exit;
 ```
- - Reference: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04
+
 ## Run
 ```
 sudo service mysql start
 mvn spring-boot:run
 ```
+
+## References
+- https://javahungry.blogspot.com/2019/09/spring-boot-hello-world-example-maven-eclipse.html
+- https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-20-04
+- https://www.codejava.net/frameworks/spring-boot/user-registration-and-login-tutorial
+- https://www.javaguides.net/2018/10/user-registration-module-using-springboot-springmvc-springsecurity-hibernate5-thymeleaf-mysql.html
