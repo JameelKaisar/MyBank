@@ -1,5 +1,7 @@
 package com.example.mybank.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +23,11 @@ public class HomeController {
 	public String home(Model model, Authentication authentication) {
 		String username = authentication.getName();
 		User user = userRepo.findByUsername(username);
+		List<User> users = userRepo.findAllUsers();
 		model.addAttribute("username", user.getUsername());
 		model.addAttribute("email", user.getEmail());
 		model.addAttribute("admin", user.getAdmin());
+        model.addAttribute("users", users);
 		return "home";
 	}
 
