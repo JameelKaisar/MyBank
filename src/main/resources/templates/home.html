@@ -6,5 +6,11 @@
 </head>
 <body>
     <h1>Home Page</h1>
+    <form method="post" th:action="@{/logout}">
+        <p>
+            Welcome <b>[[${#request.userPrincipal.principal.username}]]</b>
+        </p>
+        <input type="submit" value="Logout" />
+    </form>
 </body>
 </html>
