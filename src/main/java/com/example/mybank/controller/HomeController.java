@@ -1,6 +1,8 @@
 package com.example.mybank.controller;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +20,33 @@ public class HomeController {
 
 	@Autowired
     private UserRepository userRepo;
-	
+
 	@GetMapping(path="/home")
-	public String home(Model model, Authentication authentication) {
+	public String home(
+			Model model,
+			Authentication authentication,
+			@RequestParam("type") Optional<String> type,
+			@RequestParam("query") Optional<String> query
+	) {
 		String email = authentication.getName();
 		User user = userRepo.findByEmail(email);
 		List<User> users = userRepo.findAllUsers();
+		List<User> queryUsers = new ArrayList<User>();
+		String paramType = type.orElse("");
+		String paramQuery = query.orElse("");
+		try {
+			if (paramType.equals("name")) {
+				queryUsers = userRepo.findUsersByName(paramQuery);
+			}
+			else if (paramType.equals("aadhar")) {
+				queryUsers = userRepo.findUsersByAadhar(paramQuery);
+			}
+			else if (paramType.equals("phone")) {
+				queryUsers = userRepo.findUsersByPhone(paramQuery);
+			}
+		} catch (Exception e) {
+			return "redirect:/home?qerror";
+		}
 		model.addAttribute("email", user.getEmail());
 		model.addAttribute("name", user.getName());
 		model.addAttribute("address", user.getAddress());
@@ -32,7 +55,10 @@ public class HomeController {
 		model.addAttribute("aadhar", user.getAadhar());
 		model.addAttribute("phone", user.getPhone());
 		model.addAttribute("admin", user.getAdmin());
-        model.addAttribute("users", users);
+		model.addAttribute("users", users);
+		model.addAttribute("paramType", paramType);
+		model.addAttribute("paramQuery", paramQuery);
+		model.addAttribute("queryUsers", queryUsers);
 		return "home";
 	}
 
