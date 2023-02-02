@@ -14,15 +14,15 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
      
-    @Column(nullable=false, unique=true, length=64)
-    private String username;
-     
+    @Column(name="email", nullable=false, unique=true, length=128)
+    private String email;
+    
     @Column(nullable=false, length=64)
     private String password;
-     
-    @Column(name="email", nullable=true, unique=true, length=128)
-    private String email;
-
+    
+    @Column(name="name", nullable=false, unique=true, length=64)
+    private String name;
+    
     @Column(name="admim", nullable=false)
     private Boolean admin;
 
@@ -33,25 +33,25 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
+    
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public String getEmail() {
-        return email;
+    
+    public String getName() {
+        return name;
     }
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getAdmin() {

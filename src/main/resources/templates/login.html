@@ -15,11 +15,11 @@
                     <div class="card-body text-center">
                         <h4 class="card-title text-center">Login</h4>
                         <div th:if="${param.error}" class="my-3">
-                            <div class="alert alert-danger">Invalid Username or Password</div>
+                            <div class="alert alert-danger">Invalid Email or Password</div>
                         </div>
                         <form method="post" th:action="@{/login}" class="form">
                             <div class="form-group my-3">
-                                <input type="text" name="username" class="form-control" placeholder="Username" required
+                                <input type="email" name="email" class="form-control" placeholder="Email" required
                                     autofocus>
                             </div>
                             <div class="form-group my-3">

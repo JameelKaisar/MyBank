@@ -33,7 +33,7 @@ public class RegisterController {
 			user.setPassword(encodedPassword);
 			userRepo.save(user);
 
-			Authentication authentication = new UsernamePasswordAuthenticationToken(user.getUsername(), plainPassword);
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), plainPassword);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		} catch (Exception e) {
 			return "redirect:/register?error";

@@ -9,15 +9,15 @@
     <div class="container">
 
         <div class="jumbotron text-center mt-3">
-            <h2>Welcome <b><span th:text="${username}">Username</span></b></h2>
+            <h2>Welcome <b><span th:text="${name}">Name</span></b></h2>
             <p>Logged in as: <span th:text="${admin} ? 'Admin' : 'User'">User</span></p>
         </div>
 
         <div class="card mb-3">
             <h3 class="card-header">User Details</h3>
             <div class="card-body">
-                <p class="card-text">Username: <span th:text="${username}">Username</span></p>
                 <p class="card-text">Email: <span th:text="${email}">Email</span></p>
+                <p class="card-text">Name: <span th:text="${name}">Name</span></p>
             </div>
         </div>
       
@@ -31,7 +31,7 @@
                         </div>
                         <form method="post" th:action="@{/home}" class="form text-center">
                             <div class="form-group">
-                                <input type="email" name="email" th:value="${email}" class="form-control" maxlength="128" placeholder="Email" required>
+                                <input type="text" name="name" th:value="${name}" class="form-control" maxlength="128" placeholder="Name" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
@@ -45,15 +45,15 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Username</th>
                         <th>Email</th>
+                        <th>Name</th>
                         <th>Role</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="user: ${users}">
-                        <td th:text="${user.username}"></td>
                         <td th:text="${user.email}"></td>
+                        <td th:text="${user.name}"></td>
                         <td th:text="${admin} ? 'Admin' : 'User'"></td>
                     </tr>
                 </tbody>

@@ -21,22 +21,22 @@ public class HomeController {
 	
 	@GetMapping(path="/home")
 	public String home(Model model, Authentication authentication) {
-		String username = authentication.getName();
-		User user = userRepo.findByUsername(username);
+		String email = authentication.getName();
+		User user = userRepo.findByEmail(email);
 		List<User> users = userRepo.findAllUsers();
-		model.addAttribute("username", user.getUsername());
 		model.addAttribute("email", user.getEmail());
+		model.addAttribute("name", user.getName());
 		model.addAttribute("admin", user.getAdmin());
         model.addAttribute("users", users);
 		return "home";
 	}
 
 	@PostMapping(path="/home")
-	public String home(Authentication authentication, @RequestParam("email") String new_email) {
+	public String home(Authentication authentication, @RequestParam("name") String new_name) {
 		try {
-			String username = authentication.getName();
-			User user = userRepo.findByUsername(username);
-			user.setEmail(new_email);
+			String email = authentication.getName();
+			User user = userRepo.findByEmail(email);
+			user.setName(new_name);
 			userRepo.save(user);
 		} catch (Exception e) {
 			return "redirect:/home?error";
