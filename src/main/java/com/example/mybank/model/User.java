@@ -22,6 +22,21 @@ public class User {
     
     @Column(name="name", nullable=false, unique=true, length=64)
     private String name;
+
+    @Column(name="address", nullable=false, length=256)
+    private String address;
+
+    @Column(name="city", nullable=false, length=64)
+    private String city;
+
+    @Column(name="pin", nullable=false, length=6)
+    private String pin;
+
+    @Column(name="aadhar", nullable=false, length=12)
+    private String aadhar;
+
+    @Column(name="phone", nullable=false, length=10)
+    private String phone;
     
     @Column(name="admim", nullable=false)
     private Boolean admin;
@@ -52,6 +67,41 @@ public class User {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getAadhar() {
+        return aadhar;
+    }
+    public void setAadhar(String aadhar) {
+        this.aadhar = aadhar;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Boolean getAdmin() {

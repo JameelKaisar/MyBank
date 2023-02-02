@@ -26,17 +26,35 @@ public class HomeController {
 		List<User> users = userRepo.findAllUsers();
 		model.addAttribute("email", user.getEmail());
 		model.addAttribute("name", user.getName());
+		model.addAttribute("address", user.getAddress());
+		model.addAttribute("city", user.getCity());
+		model.addAttribute("pin", user.getPin());
+		model.addAttribute("aadhar", user.getAadhar());
+		model.addAttribute("phone", user.getPhone());
 		model.addAttribute("admin", user.getAdmin());
         model.addAttribute("users", users);
 		return "home";
 	}
 
 	@PostMapping(path="/home")
-	public String home(Authentication authentication, @RequestParam("name") String new_name) {
+	public String home(
+			Authentication authentication,
+			@RequestParam("name") String new_name,
+			@RequestParam("address") String new_address,
+			@RequestParam("city") String new_city,
+			@RequestParam("pin") String new_pin,
+			@RequestParam("aadhar") String new_aadhar,
+			@RequestParam("phone") String new_phone
+	) {
 		try {
 			String email = authentication.getName();
 			User user = userRepo.findByEmail(email);
 			user.setName(new_name);
+			user.setAddress(new_address);
+			user.setCity(new_city);
+			user.setPin(new_pin);
+			user.setAadhar(new_aadhar);
+			user.setPhone(new_phone);
 			userRepo.save(user);
 		} catch (Exception e) {
 			return "redirect:/home?error";
