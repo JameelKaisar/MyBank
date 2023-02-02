@@ -26,6 +26,46 @@
                 <p class="card-text">Role: <span th:text="${admin} ? 'Admin' : 'User'">User</span></p>
             </div>
         </div>
+
+        <div class="card mb-3">
+            <h3 class="card-header">Transaction History</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Transaction Type</th>
+                        <th>Amount</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Credit</td>
+                        <td>1000</td>
+                        <td>1000</td>
+                    </tr>
+                    <tr>
+                        <td>Credit</td>
+                        <td>500</td>
+                        <td>1500</td>
+                    </tr>
+                    <tr>
+                        <td>Debit</td>
+                        <td>400</td>
+                        <td>1100</td>
+                    </tr>
+                    <tr>
+                        <td>Credit</td>
+                        <td>100</td>
+                        <td>1200</td>
+                    </tr>
+                    <tr>
+                        <td>Debit</td>
+                        <td>300</td>
+                        <td>900</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
       
         <div class="card mb-3">
             <h3 class="card-header">Update Details</h3>
