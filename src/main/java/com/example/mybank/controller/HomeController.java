@@ -25,6 +25,7 @@ public class HomeController {
 	public String home(
 			Model model,
 			Authentication authentication,
+			@RequestParam("tab") Optional<String> tab,
 			@RequestParam("type") Optional<String> type,
 			@RequestParam("query") Optional<String> query
 	) {
@@ -32,21 +33,25 @@ public class HomeController {
 		User user = userRepo.findByEmail(email);
 		List<User> users = userRepo.findAllUsers();
 		List<User> queryUsers = new ArrayList<User>();
+		String paramTab = tab.orElse("home");
 		String paramType = type.orElse("");
 		String paramQuery = query.orElse("");
-		try {
-			if (paramType.equals("name")) {
-				queryUsers = userRepo.findUsersByName(paramQuery);
+		if (paramTab.equals("search")) {
+			try {
+				if (paramType.equals("name")) {
+					queryUsers = userRepo.findUsersByName(paramQuery);
+				}
+				else if (paramType.equals("aadhar")) {
+					queryUsers = userRepo.findUsersByAadhar(paramQuery);
+				}
+				else if (paramType.equals("phone")) {
+					queryUsers = userRepo.findUsersByPhone(paramQuery);
+				}
+			} catch (Exception e) {
+				return "redirect:/home?qerror&action=search";
 			}
-			else if (paramType.equals("aadhar")) {
-				queryUsers = userRepo.findUsersByAadhar(paramQuery);
-			}
-			else if (paramType.equals("phone")) {
-				queryUsers = userRepo.findUsersByPhone(paramQuery);
-			}
-		} catch (Exception e) {
-			return "redirect:/home?qerror";
 		}
+		model.addAttribute("tab", paramTab);
 		model.addAttribute("email", user.getEmail());
 		model.addAttribute("name", user.getName());
 		model.addAttribute("address", user.getAddress());
@@ -65,6 +70,7 @@ public class HomeController {
 	@PostMapping(path="/home")
 	public String home(
 			Authentication authentication,
+			@RequestParam("tab") Optional<String> tab,
 			@RequestParam("name") String new_name,
 			@RequestParam("address") String new_address,
 			@RequestParam("city") String new_city,
@@ -72,20 +78,23 @@ public class HomeController {
 			@RequestParam("aadhar") String new_aadhar,
 			@RequestParam("phone") String new_phone
 	) {
-		try {
-			String email = authentication.getName();
-			User user = userRepo.findByEmail(email);
-			user.setName(new_name);
-			user.setAddress(new_address);
-			user.setCity(new_city);
-			user.setPin(new_pin);
-			user.setAadhar(new_aadhar);
-			user.setPhone(new_phone);
-			userRepo.save(user);
-		} catch (Exception e) {
-			return "redirect:/home?error";
+		String paramTab = tab.orElse("home");
+		if (paramTab.equals("update")) {
+			try {
+				String email = authentication.getName();
+				User user = userRepo.findByEmail(email);
+				user.setName(new_name);
+				user.setAddress(new_address);
+				user.setCity(new_city);
+				user.setPin(new_pin);
+				user.setAadhar(new_aadhar);
+				user.setPhone(new_phone);
+				userRepo.save(user);
+			} catch (Exception e) {
+				return "redirect:/home?error&tab=update";
+			}
 		}
-		return "redirect:/home";
+		return String.format("redirect:/home?tab=%s", paramTab);
 	}
 
 }

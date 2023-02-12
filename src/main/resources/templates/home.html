@@ -108,6 +108,7 @@
                                     <div class="alert alert-danger">Unknown Error</div>
                                 </div>
                                 <form method="post" th:action="@{/home}" class="form">
+                                    <input type="hidden" name="tab" value="update">
                                     <div class="form-group">
                                         <label for="update-email">Email</label>
                                         <input type="email" id="update-email" th:value="${email}" class="form-control" maxlength="128" placeholder="Email" disabled>
@@ -161,6 +162,7 @@
                                     <div class="alert alert-danger">Unknown Error</div>
                                 </div>
                                 <form method="get" th:action="@{/home}" class="form text-center">
+                                    <input type="hidden" name="tab" value="search">
                                     <div class="form-group my-3">
                                         <select name="type" class="form-control" required>
                                             <option value="name" th:selected="${paramType} == 'name'">Name</option>
@@ -252,5 +254,14 @@
 
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+
+        let tab = /*[[${tab}]]*/ 'home';
+        console.log(tab);
+        $(`#pills-tab button[data-target="#pills-${tab}"]`).tab('show');
+
+    /*]]>*/
+    </script>
 </body>
 </html>
