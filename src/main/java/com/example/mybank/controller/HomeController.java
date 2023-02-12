@@ -71,27 +71,58 @@ public class HomeController {
 	public String home(
 			Authentication authentication,
 			@RequestParam("tab") Optional<String> tab,
-			@RequestParam("name") String new_name,
-			@RequestParam("address") String new_address,
-			@RequestParam("city") String new_city,
-			@RequestParam("pin") String new_pin,
-			@RequestParam("aadhar") String new_aadhar,
-			@RequestParam("phone") String new_phone
+			@RequestParam("email") Optional<String> user_email,
+			@RequestParam("name") Optional<String> new_name,
+			@RequestParam("address") Optional<String> new_address,
+			@RequestParam("city") Optional<String> new_city,
+			@RequestParam("pin") Optional<String> new_pin,
+			@RequestParam("aadhar") Optional<String> new_aadhar,
+			@RequestParam("phone") Optional<String> new_phone,
+			@RequestParam("role") Optional<String> new_role
 	) {
 		String paramTab = tab.orElse("home");
 		if (paramTab.equals("update")) {
 			try {
 				String email = authentication.getName();
 				User user = userRepo.findByEmail(email);
-				user.setName(new_name);
-				user.setAddress(new_address);
-				user.setCity(new_city);
-				user.setPin(new_pin);
-				user.setAadhar(new_aadhar);
-				user.setPhone(new_phone);
+				if (new_name.isPresent())
+					user.setName(new_name.get());
+				if (new_address.isPresent())
+					user.setAddress(new_address.get());
+				if (new_city.isPresent())
+					user.setCity(new_city.get());
+				if (new_pin.isPresent())
+					user.setPin(new_pin.get());
+				if (new_aadhar.isPresent())
+					user.setAadhar(new_aadhar.get());
+				if (new_phone.isPresent())
+					user.setPhone(new_phone.get());
 				userRepo.save(user);
 			} catch (Exception e) {
 				return "redirect:/home?error&tab=update";
+			}
+		}
+		else if (paramTab.equals("list")) {
+			try {
+				String email = user_email.get();
+				User user = userRepo.findByEmail(email);
+				if (new_name.isPresent())
+					user.setName(new_name.get());
+				if (new_address.isPresent())
+					user.setAddress(new_address.get());
+				if (new_city.isPresent())
+					user.setCity(new_city.get());
+				if (new_pin.isPresent())
+					user.setPin(new_pin.get());
+				if (new_aadhar.isPresent())
+					user.setAadhar(new_aadhar.get());
+				if (new_phone.isPresent())
+					user.setPhone(new_phone.get());
+				if (new_role.isPresent())
+					user.setAdmin(new_role.get().equals("1") ? true : false);
+				userRepo.save(user);
+			} catch (Exception e) {
+				return "redirect:/home?lerror&tab=list";
 			}
 		}
 		return String.format("redirect:/home?tab=%s", paramTab);
