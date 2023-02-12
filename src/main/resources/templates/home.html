@@ -59,42 +59,44 @@
             <div class="tab-pane fade" id="pills-transaction" role="tabpanel" aria-labelledby="pills-transaction-tab">
                 <div class="card mb-3">
                     <h3 class="card-header">Transaction History</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Transaction Type</th>
-                                <th>Amount</th>
-                                <th>Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Credit</td>
-                                <td>1000</td>
-                                <td>1000</td>
-                            </tr>
-                            <tr>
-                                <td>Credit</td>
-                                <td>500</td>
-                                <td>1500</td>
-                            </tr>
-                            <tr>
-                                <td>Debit</td>
-                                <td>400</td>
-                                <td>1100</td>
-                            </tr>
-                            <tr>
-                                <td>Credit</td>
-                                <td>100</td>
-                                <td>1200</td>
-                            </tr>
-                            <tr>
-                                <td>Debit</td>
-                                <td>300</td>
-                                <td>900</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Transaction Type</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Credit</td>
+                                    <td>1000</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>Credit</td>
+                                    <td>500</td>
+                                    <td>1500</td>
+                                </tr>
+                                <tr>
+                                    <td>Debit</td>
+                                    <td>400</td>
+                                    <td>1100</td>
+                                </tr>
+                                <tr>
+                                    <td>Credit</td>
+                                    <td>100</td>
+                                    <td>1200</td>
+                                </tr>
+                                <tr>
+                                    <td>Debit</td>
+                                    <td>300</td>
+                                    <td>900</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -179,6 +181,42 @@
                         </div>
                     </div>
                     <div th:if="${param.type}">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>Pin Code</th>
+                                        <th>Aadhar Number</th>
+                                        <th>Phone Number</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user: ${queryUsers}">
+                                        <td th:text="${user.email}"></td>
+                                        <td th:text="${user.name}"></td>
+                                        <td th:text="${user.address}"></td>
+                                        <td th:text="${user.city}"></td>
+                                        <td th:text="${user.pin}"></td>
+                                        <td th:text="${user.aadhar}"></td>
+                                        <td th:text="${user.phone}"></td>
+                                        <td th:text="${user.admin} ? 'Admin' : 'User'"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-list" role="tabpanel" aria-labelledby="pills-list-tab">
+                <div class="card mb-3" th:if="${admin}">
+                    <h3 class="card-header">User List</h3>
+                    <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -190,54 +228,48 @@
                                     <th>Aadhar Number</th>
                                     <th>Phone Number</th>
                                     <th>Role</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="user: ${queryUsers}">
-                                    <td th:text="${user.email}"></td>
-                                    <td th:text="${user.name}"></td>
-                                    <td th:text="${user.address}"></td>
-                                    <td th:text="${user.city}"></td>
-                                    <td th:text="${user.pin}"></td>
-                                    <td th:text="${user.aadhar}"></td>
-                                    <td th:text="${user.phone}"></td>
-                                    <td th:text="${user.admin} ? 'Admin' : 'User'"></td>
+                                <tr th:each="user: ${users}">
+                                    <form method="post" th:action="@{/home}" class="form">
+                                        <input type="hidden" name="tab" value="list">
+                                        <td>
+                                            <input type="email" id="update-email" th:value="${user.email}" class="form-control" maxlength="128" placeholder="Email" disabled>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="name" id="update-name" th:value="${user.name}" class="form-control" maxlength="128" placeholder="Name" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="address" id="update-address" th:value="${user.address}" class="form-control" maxlength="256" placeholder="Address" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="city" id="update-city" th:value="${user.city}" class="form-control" maxlength="64" placeholder="City" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="pin" id="update-pin" th:value="${user.pin}" class="form-control" maxlength="6" placeholder="Pin Code" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="aadhar" id="update-aadhar" th:value="${user.aadhar}" class="form-control" maxlength="12" placeholder="Aadhar Number" required>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="phone" id="update-phone" th:value="${user.phone}" class="form-control" maxlength="10" placeholder="Phone Number" required>
+                                        </td>
+                                        <td>
+                                            <select id="update-role" name="role" class="form-control">
+                                                <option value="0" th:selected="${user.admin} == false">User</option>
+                                                <option value="1" th:selected="${user.admin} == true">Admin</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </td>
+                                    </form>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="pills-list" role="tabpanel" aria-labelledby="pills-list-tab">
-                <div class="card mb-3" th:if="${admin}">
-                    <h3 class="card-header">User List</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>City</th>
-                                <th>Pin Code</th>
-                                <th>Aadhar Number</th>
-                                <th>Phone Number</th>
-                                <th>Role</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="user: ${users}">
-                                <td th:text="${user.email}"></td>
-                                <td th:text="${user.name}"></td>
-                                <td th:text="${user.address}"></td>
-                                <td th:text="${user.city}"></td>
-                                <td th:text="${user.pin}"></td>
-                                <td th:text="${user.aadhar}"></td>
-                                <td th:text="${user.phone}"></td>
-                                <td th:text="${user.admin} ? 'Admin' : 'User'"></td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
