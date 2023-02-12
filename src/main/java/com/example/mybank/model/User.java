@@ -38,7 +38,7 @@ public class User {
     @Column(name="phone", nullable=false, length=10)
     private String phone;
     
-    @Column(name="admim", nullable=false)
+    @Column(name="admin", nullable=false)
     private Boolean admin;
 
     public Long getId() {
